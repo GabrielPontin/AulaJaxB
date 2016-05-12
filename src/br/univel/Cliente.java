@@ -1,11 +1,10 @@
 package br.univel;
 
-import java.io.Serializable;
+import javax.xml.bind.annotation.XmlRootElement;
 
-public class Cliente implements Serializable {
+@XmlRootElement
+public class Cliente {
 
-	
-	private static final long serialVersionUID = 3567500841012871230L;
 	
 	private int id;
 	private String nome;
