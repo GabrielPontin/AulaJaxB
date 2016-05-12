@@ -2,6 +2,7 @@ package br.univel;
 
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.io.StringWriter;
@@ -14,7 +15,7 @@ import javax.xml.transform.stream.StreamResult;
 
 public class Gravacao {
 	
-	public static void main(String[]args){
+	public static void main(String[]args) throws IOException{
 		
 		Cliente c = new Cliente();
 		c.setId(1);
@@ -36,6 +37,11 @@ public class Gravacao {
 		}catch(JAXBException e){
 		e.printStackTrace();
 		}
-		System.out.println("Executo");
+		
+	String xml = out.toString();
+	FileWriter fw = new FileWriter("arq.xml");
+	fw.write(xml);
+	fw.close();
+		
 	}
 }
