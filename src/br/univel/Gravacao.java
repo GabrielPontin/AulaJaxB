@@ -4,31 +4,45 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.StringReader;
 import java.io.StringWriter;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
 import javax.xml.bind.PropertyException;
+import javax.xml.bind.Unmarshaller;
 import javax.xml.transform.stream.StreamResult;
 
 public class Gravacao {
 	
-	public static void main(String[]args){
+	public static void main(String[]args)throws Exception{
 		
+		String xml = null;
 		try{
 			FileReader fr = new FileReader("arq.xml");
 			BufferedReader br = new BufferedReader(fr);
 			
 			StringBuilder sb = new StringBuilder();
 			String line = null;
-			
 			while((line = br.readLine())!= null){
 				sb.append(line).append("\n");
 		}
 			
-			catch(){
+			xml = sb.toString();
+			br.close();
+			fr.close();
 			
+			StringReader in = new StringReader(xml);
+			
+			JAXBContext context = JAXBContext.newInstance(Cliente.class);
+			Unmarshaller unmarshaller = context.createUnmarshaller();
+			Cliente cli = (Cliente) unmarshaller.unmarshal(in);
+			System.out.println(cli.getId());
+			System.out.println(cli.getNome());
+			
+		}catch(JAXBException e){
+			e.printStackTrace();
 		}
 		
 		Cliente c = new Cliente();
@@ -51,11 +65,5 @@ public class Gravacao {
 		}catch(JAXBException e){
 		e.printStackTrace();
 		}
-		
-	String xml = out.toString();
-	FileWriter fw = new FileWriter("arq.xml");
-	fw.write(xml);
-	fw.close();
-		
 	}
 }
